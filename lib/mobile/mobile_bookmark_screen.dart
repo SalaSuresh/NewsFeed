@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../bookmark_screen.dart';
 import '../constants/constants.dart';
 import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';

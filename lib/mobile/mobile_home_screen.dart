@@ -81,11 +81,11 @@ class NewsFeedState extends State<NewsFeed> {
   testFunction2(List<String> newsData) {
     print("test function2222 called $newsData");
     // await Future.delayed(const Duration(milliseconds: 5000), () {
-      setState(() {
-        print("test setting state--------------");
-        List<String> test = ["ABC", "DEF", "GHI"];
-        tasks = test;
-      });
+    setState(() {
+      print("test setting state--------------");
+      List<String> test = ["ABC", "DEF", "GHI"];
+      tasks = test;
+    });
     // });
     /*WidgetsBinding.instance.addPostFrameCallback((_) {
       //executes after build is done
