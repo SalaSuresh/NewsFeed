@@ -45,7 +45,7 @@ refreshAction(BuildContext context, double padding) {
         child: GestureDetector(
           onTap: () async {
             await getTestdata().then((newsData) {
-              updateNewsFeed(newsData);
+              // updateNewsFeed(newsData);
             });
           },
           child: const Icon(

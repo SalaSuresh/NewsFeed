@@ -14,8 +14,7 @@ class ResponsiveSettingsLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      //TODO: Change the max width to 500 later
-      if (constraints.maxWidth < 600) {
+      if (constraints.maxWidth < 500) {
         return mobileScreen;
       } else if (constraints.maxWidth < 1100) {
         return tabletScreen;

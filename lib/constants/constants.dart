@@ -8,3 +8,7 @@ const apiNews =
     "https://newsapi.org/v2/everything?q=tesla&sortBy=publishedAt&apiKey=$apiKey";
 const apiHeadlines =
     "https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey";
+
+//TODO: Added test API and need to remove later
+const apiTest =
+    "https://reactnativetestapp-fd209-default-rtdb.firebaseio.com/test.json";

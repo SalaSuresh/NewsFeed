@@ -3,6 +3,7 @@ import 'package:news_feed/constants/constants.dart';
 
 import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
+import '../web_screen.dart';
 
 class MobileHomeScreen extends StatelessWidget {
   const MobileHomeScreen({super.key});
@@ -41,12 +42,21 @@ class MobileScaffold extends StatelessWidget {
           )
         ],
       ),
-      body: NewsFeed(),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const WebScreen();
+            }));
+          },
+          child: const Text("Mobile Web View"),
+        ),
+      ),
     );
   }
 }
-
-class NewsFeed extends StatefulWidget {
+//TODO: Commented the below code and keeping for reference to implement the required features
+/*class NewsFeed extends StatefulWidget {
   NewsFeed({super.key});
 
   @override
@@ -55,20 +65,15 @@ class NewsFeed extends StatefulWidget {
   testfunction(List<String> newsData) async {
     print("test function called $newsData");
     createState().testFunction2(newsData);
-    /*createState().setState(() {
-      print("test function called-------");
-    });*/
   }
-}
+}*/
 
-class NewsFeedState extends State<NewsFeed> {
+/*class NewsFeedState extends State<NewsFeed> {
   List<String> tasks = ["qwe", "tyu", "iop"];
 
   @override
   Widget build(BuildContext context) {
     print("Build Called-------");
-    // tasks = getApiData() as List<String>;
-    // getApiData();
     return ListView.builder(
       scrollDirection: Axis.vertical,
       itemCount: tasks.length,
@@ -80,26 +85,15 @@ class NewsFeedState extends State<NewsFeed> {
 
   testFunction2(List<String> newsData) {
     print("test function2222 called $newsData");
-    // await Future.delayed(const Duration(milliseconds: 5000), () {
     setState(() {
       print("test setting state--------------");
       List<String> test = ["ABC", "DEF", "GHI"];
       tasks = test;
     });
-    // });
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      //executes after build is done
-      setState(() {
-        print("setState Called-----");
-        List<String> test = ["ABC", "DEF", "GHI"];
-        tasks = test;
-      });
-    });*/
   }
-}
+}*/
 
-/// Refer https://stackoverflow.com/questions/49587679/not-able-to-update-list-after-http-call-flutter
-class ListItem extends StatelessWidget {
+/*class ListItem extends StatelessWidget {
   ListItem(this.task, {super.key});
 
   String task;
@@ -113,7 +107,7 @@ class ListItem extends StatelessWidget {
       ),
       elevation: 10,
       child: Container(
-        /*foregroundDecoration: const BoxDecoration(
+        */ /*foregroundDecoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Colors.transparent,
@@ -123,7 +117,7 @@ class ListItem extends StatelessWidget {
             end: Alignment.bottomCenter,
             stops: [0, 0.5],
           ),
-        ),*/
+        ),*/ /*
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
@@ -142,23 +136,20 @@ class ListItem extends StatelessWidget {
             ),
           ],
         ),
-      ) /*Column(children: [
+      ) */ /*Column(children: [
         Image.network(
             'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png'),
         Text(task, textDirection: TextDirection.ltr),
-      ],)*/
+      ],)*/ /*
       ,
     );
   }
-}
+}*/
 
-updateNewsFeed(List<String> newsData) async {
+/*updateNewsFeed(List<String> newsData) async {
   print("Update Newsfeed UI $newsData");
   NewsFeed().testfunction(newsData);
-  /*NewsFeedState().setState(() {
-    // NewsFeedState().tasks = newsData;
-  });*/
-}
+}*/
 
 /*
 * /*Center(
