@@ -3,11 +3,14 @@ import 'package:news_feed/desktop/desktop_home_screen.dart';
 import 'package:news_feed/responsive/responsive_home_layout.dart';
 import 'package:news_feed/tablet/tablet_home_screen.dart';
 
+import 'locator.dart';
 import 'mobile/mobile_home_screen.dart';
+
 /*
 * Refer the video for Splash https://www.youtube.com/watch?v=4Aawfl6yOg4
 * */
 void main() {
+  setup();
   runApp(const MyHome());
 }
 

@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../bookmark_screen.dart';
-import '../../mobile/mobile_home_screen.dart';
-import '../../service/api_service.dart';
 
 getTitle(String title) {
   return Text(title,
@@ -44,9 +42,9 @@ refreshAction(BuildContext context, double padding) {
         padding: EdgeInsets.only(right: padding),
         child: GestureDetector(
           onTap: () async {
-            await getTestdata().then((newsData) {
-              // updateNewsFeed(newsData);
-            });
+            /*await getTestdata().then((newsData) {
+              updateNewsFeed(newsData);
+            });*/
           },
           child: const Icon(
             Icons.refresh,

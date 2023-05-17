@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/constants/constants.dart';
 
+import '../locator.dart';
+import '../service/api_service.dart';
 import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
-import '../web_screen.dart';
 
 class MobileHomeScreen extends StatelessWidget {
   const MobileHomeScreen({super.key});
@@ -42,15 +43,45 @@ class MobileScaffold extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const WebScreen();
-            }));
-          },
-          child: const Text("Mobile Web View"),
-        ),
+      body: const NewsFeedBody(),
+    );
+  }
+}
+
+class NewsFeedBody extends StatefulWidget {
+  const NewsFeedBody({super.key});
+
+  /*@override
+  State<StatefulWidget> createState() {
+    throw UnimplementedError();
+  }*/
+  @override
+  NewsFeedScaffoldState createState() => NewsFeedScaffoldState();
+}
+
+class NewsFeedScaffoldState extends State<NewsFeedBody> {
+  String message = "Application Message";
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Text("Mobile Home Screen \nMessage: $message"),
+          ElevatedButton(
+            onPressed: () async {
+              /*Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const WebScreen();
+              }));*/
+              var messageFromFirebase =
+                  await locator.get<ApiService>().getTestApiData();
+              setState(() {
+                message = messageFromFirebase;
+              });
+            },
+            child: const Text("Get Message"),
+          )
+        ],
       ),
     );
   }
