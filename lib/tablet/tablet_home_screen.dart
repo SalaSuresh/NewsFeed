@@ -25,7 +25,8 @@ class TabletHomeScaffold extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
         actions: <Widget>[
-          refreshAction(context, 40.0),
+          //TODO: Need to enable later
+          // refreshAction(context, 40.0),
           bookmarksAction(context, 40.0),
           Padding(
             padding: const EdgeInsets.only(right: 40.0),

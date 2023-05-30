@@ -25,7 +25,8 @@ class DesktopHomeScaffold extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
         actions: <Widget>[
-          refreshAction(context, 60.0),
+          //TODO:Need to update later
+          // refreshAction(context, 60.0),
           bookmarksAction(context, 60.0),
           Padding(
             padding: const EdgeInsets.only(right: 60.0),

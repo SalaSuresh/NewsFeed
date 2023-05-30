@@ -35,25 +35,26 @@ bookmarksAction(BuildContext context, double padding) {
   }
 }
 
-refreshAction(BuildContext context, double padding) {
+refreshAction(
+    BuildContext context, double padding, Function() refreshNewsFeed) {
   try {
-    if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
-      return Padding(
-        padding: EdgeInsets.only(right: padding),
-        child: GestureDetector(
-          onTap: () async {
-            /*await getTestdata().then((newsData) {
-              updateNewsFeed(newsData);
-            });*/
-          },
-          child: const Icon(
-            Icons.refresh,
-          ),
+    //TODO: Commented the below condition for testing, need to enable later
+    // if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
+    return Padding(
+      padding: EdgeInsets.only(right: padding),
+      child: GestureDetector(
+        onTap: () {
+          refreshNewsFeed();
+          // getNewsFeed();
+        },
+        child: const Icon(
+          Icons.refresh,
         ),
-      );
-    } else {
-      return Padding(padding: EdgeInsets.only(right: padding));
-    }
+      ),
+    );
+    // } else {
+    //   return Padding(padding: EdgeInsets.only(right: padding));
+    // }
   } catch (exception) {
     return Padding(padding: EdgeInsets.only(right: padding));
   }

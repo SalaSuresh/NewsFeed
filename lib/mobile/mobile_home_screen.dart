@@ -6,6 +6,8 @@ import '../service/api_service.dart';
 import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
 
+String message = "Application Message";
+
 class MobileHomeScreen extends StatelessWidget {
   const MobileHomeScreen({super.key});
 
@@ -15,8 +17,36 @@ class MobileHomeScreen extends StatelessWidget {
   }
 }
 
-class MobileScaffold extends StatelessWidget {
+class MobileScaffold extends StatefulWidget {
   const MobileScaffold({super.key});
+
+  @override
+  State<MobileScaffold> createState() => _MobileScaffoldState();
+}
+
+class _MobileScaffoldState extends State<MobileScaffold> {
+  @override
+  void initState() {
+    debugPrint("initState called");
+    super.initState();
+    getNewsFeed();
+  }
+
+  getNewsFeed() async {
+    var messageFromFirebase = await locator.get<ApiService>().getTestApiData();
+    setState(() {
+      message = messageFromFirebase;
+    });
+
+    var newsData = await locator.get<ApiService>().getNews();
+    debugPrint("NEWS DATA: $newsData");
+    newsData.forEach((e){
+      e.forEach((a){
+        print("NEWS DATA-------------------- ${a.title}");
+        print("NEWS DATA-------------------- ${a.author}");
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +56,7 @@ class MobileScaffold extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
         actions: <Widget>[
-          refreshAction(context, 20.0),
+          refreshAction(context, 20.0, getNewsFeed),
           bookmarksAction(context, 20.0),
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -43,24 +73,25 @@ class MobileScaffold extends StatelessWidget {
           )
         ],
       ),
-      body: const NewsFeedBody(),
+      body: NewsFeedBody(),
     );
   }
 }
 
 class NewsFeedBody extends StatefulWidget {
-  const NewsFeedBody({super.key});
 
-  /*@override
-  State<StatefulWidget> createState() {
-    throw UnimplementedError();
-  }*/
+  NewsFeedBody({super.key});
+
   @override
   NewsFeedScaffoldState createState() => NewsFeedScaffoldState();
 }
 
 class NewsFeedScaffoldState extends State<NewsFeedBody> {
-  String message = "Application Message";
+  @override
+  void initState() {
+    super.initState();
+    // getNewsFeed();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +115,14 @@ class NewsFeedScaffoldState extends State<NewsFeedBody> {
         ],
       ),
     );
+  }
+
+  Future<void> getNewsFeed() async {
+    print("Getting News Feed");
+    var messageFromFirebase = await locator.get<ApiService>().getTestApiData();
+    setState(() {
+      message = messageFromFirebase;
+    });
   }
 }
 //TODO: Commented the below code and keeping for reference to implement the required features
@@ -177,9 +216,9 @@ class NewsFeedScaffoldState extends State<NewsFeedBody> {
   }
 }*/
 
-/*updateNewsFeed(List<String> newsData) async {
-  print("Update Newsfeed UI $newsData");
-  NewsFeed().testfunction(newsData);
+/*refreshNewsFeed() {
+  print("Refresh Newsfeed UI");
+  NewsFeedScaffoldState().getNewsFeed();
 }*/
 
 /*
