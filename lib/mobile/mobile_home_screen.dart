@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:news_feed/constants/constants.dart';
 
 import '../locator.dart';
+import '../model/news.dart';
 import '../service/api_service.dart';
 import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
+import '../web_screen.dart';
 
-String message = "Application Message";
+// String message = "Application Message";
+List<Set<NewsArticle>> listNewsArticles = [];
 
 class MobileHomeScreen extends StatelessWidget {
   const MobileHomeScreen({super.key});
@@ -27,59 +30,63 @@ class MobileScaffold extends StatefulWidget {
 class _MobileScaffoldState extends State<MobileScaffold> {
   @override
   void initState() {
-    debugPrint("initState called");
+    // debugPrint("initState called");
     super.initState();
-    getNewsFeed();
+    getNewsFeed("in");
   }
 
-  getNewsFeed() async {
-    var messageFromFirebase = await locator.get<ApiService>().getTestApiData();
+  getNewsFeed(String countryCode) async {
+    /*var messageFromFirebase = await locator.get<ApiService>().getTestApiData();
     setState(() {
       message = messageFromFirebase;
-    });
+    });*/
 
-    var newsData = await locator.get<ApiService>().getNews();
-    debugPrint("NEWS DATA: $newsData");
-    newsData.forEach((e){
-      e.forEach((a){
+    var newsData = await locator.get<ApiService>().getNewsArticles(countryCode);
+    setState(() {
+      listNewsArticles = newsData;
+    });
+    debugPrint("NEWS ARTICLES: $listNewsArticles");
+    //TODO: Need to remove --- START
+    listNewsArticles.forEach((e) {
+      e.forEach((a) {
         print("NEWS DATA-------------------- ${a.title}");
         print("NEWS DATA-------------------- ${a.author}");
       });
     });
+    //TODO: Need to remove --- END
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[10],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[900],
-        title: getTitle(appName),
-        actions: <Widget>[
-          refreshAction(context, 20.0, getNewsFeed),
-          bookmarksAction(context, 20.0),
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const SettingsScreen();
-                }));
-              },
-              child: const Icon(
-                Icons.settings,
+        backgroundColor: Colors.grey[10],
+        appBar: AppBar(
+          backgroundColor: Colors.grey[900],
+          title: getTitle(appName),
+          actions: <Widget>[
+            refreshAction(context, 20.0, getNewsFeed),
+            bookmarksAction(context, 20.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SettingsScreen();
+                  }));
+                },
+                child: const Icon(
+                  Icons.settings,
+                ),
               ),
-            ),
-          )
-        ],
-      ),
-      body: NewsFeedBody(),
-    );
+            )
+          ],
+        ),
+        body: NewsFeed() //NewsFeedBody(),
+        );
   }
 }
 
-class NewsFeedBody extends StatefulWidget {
-
+/*class NewsFeedBody extends StatefulWidget {
   NewsFeedBody({super.key});
 
   @override
@@ -101,9 +108,9 @@ class NewsFeedScaffoldState extends State<NewsFeedBody> {
           Text("Mobile Home Screen \nMessage: $message"),
           ElevatedButton(
             onPressed: () async {
-              /*Navigator.push(context, MaterialPageRoute(builder: (context) {
+              */ /*Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const WebScreen();
-              }));*/
+              }));*/ /*
               var messageFromFirebase =
                   await locator.get<ApiService>().getTestApiData();
               setState(() {
@@ -124,49 +131,52 @@ class NewsFeedScaffoldState extends State<NewsFeedBody> {
       message = messageFromFirebase;
     });
   }
-}
-//TODO: Commented the below code and keeping for reference to implement the required features
-/*class NewsFeed extends StatefulWidget {
+}*/
+
+class NewsFeed extends StatefulWidget {
   NewsFeed({super.key});
 
   @override
   NewsFeedState createState() => NewsFeedState();
 
-  testfunction(List<String> newsData) async {
+/*testfunction(List<String> newsData) async {
     print("test function called $newsData");
     createState().testFunction2(newsData);
-  }
-}*/
+  }*/
+}
 
-/*class NewsFeedState extends State<NewsFeed> {
-  List<String> tasks = ["qwe", "tyu", "iop"];
+class NewsFeedState extends State<NewsFeed> {
+  // List<String> tasks = [
+  //   "test title message for list item test title message for list item",
+  //   "tyu",
+  //   "iop"
+  // ];
 
   @override
   Widget build(BuildContext context) {
-    print("Build Called-------");
     return ListView.builder(
       scrollDirection: Axis.vertical,
-      itemCount: tasks.length,
+      itemCount: listNewsArticles.length,
       itemBuilder: (context, index) {
-        return ListItem(tasks[index]);
+        return ListItem(listNewsArticles[index]);
       },
     );
   }
 
-  testFunction2(List<String> newsData) {
+/*testFunction2(List<String> newsData) {
     print("test function2222 called $newsData");
     setState(() {
       print("test setting state--------------");
       List<String> test = ["ABC", "DEF", "GHI"];
       tasks = test;
     });
-  }
-}*/
+  }*/
+}
 
-/*class ListItem extends StatelessWidget {
-  ListItem(this.task, {super.key});
+class ListItem extends StatelessWidget {
+  ListItem(this.newsArticle, {super.key});
 
-  String task;
+  Set<NewsArticle> newsArticle;
 
   @override
   Widget build(BuildContext context) {
@@ -176,75 +186,122 @@ class NewsFeedScaffoldState extends State<NewsFeedBody> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 10,
-      child: Container(
-        */ /*foregroundDecoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.transparent,
-              Colors.grey,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0, 0.5],
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
+                  child: Text(newsArticle.first.title.toString(),
+                      textDirection: TextDirection.ltr,
+                      style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                ),
+              )),
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                  child: Text(newsArticle.first.author.toString(),
+                      textDirection: TextDirection.ltr,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      )),
+                ),
+              )),
+          Align(
+              alignment: Alignment.center,
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
+                  child: FadeInImage(
+                    image:
+                        // NetworkImage(newsArticle.first.urlToImage.toString()),
+                        NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
+                    placeholder: const NetworkImage(
+                        "https://dummyimage.com/640x360/000/aaa"),
+                  ) /*Image.network(
+                      getImageUrl(newsArticle.first.urlToImage),
+                      height: 150,
+                      fit: BoxFit.fill)*/
+                  ,
+                ),
+              )),
+          Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return WebScreen(
+                            webUrl: newsArticle.first.url.toString());
+                      }));
+                    } /*() => {
+                      debugPrint("News Article Url: ${newsArticle.first.url}")
+                    }*/
+                    ,
+                    child: const Text("View"),
+                  ),
+                ),
+              )),
+        ],
+      ),
+      /*child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          Container(
+            alignment: Alignment.center, // This is needed
+            child: Image.network(
+              'https://dummyimage.com/640x160/000/aaa',
+              height: 100,
+            ),
           ),
-        ),*/ /*
-        child: Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Image.network(
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png',
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(right: 10.0, left: 10.0, bottom: 10.0),
-              child: Text(task,
-                  textDirection: TextDirection.ltr,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
-      ) */ /*Column(children: [
-        Image.network(
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png'),
-        Text(task, textDirection: TextDirection.ltr),
-      ],)*/ /*
-      ,
+          Text(task,
+              textDirection: TextDirection.ltr,
+              style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold))
+          */ /*Image.network(
+            'https://dummyimage.com/640x160/000/aaa',
+            height: 50,
+          ),*/ /*
+          */ /*Padding(
+            padding:
+                const EdgeInsets.only(right: 10.0, left: 10.0, bottom: 10.0),
+            child: Text(task,
+                textDirection: TextDirection.ltr,
+                style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
+          ),*/ /*
+        ],
+      ),*/
     );
   }
-}*/
+
+  String getImageUrl(String? urlToImage) {
+    if (urlToImage == null) {
+      return "https://dummyimage.com/640x360/000/aaa";
+    } else {
+      return urlToImage.toString();
+    }
+  }
+}
 
 /*refreshNewsFeed() {
   print("Refresh Newsfeed UI");
   NewsFeedScaffoldState().getNewsFeed();
 }*/
-
-/*
-* /*Center(
-        */ /*
-        * Link(
-                  target: LinkTarget.defaultTarget,
-                  uri: Uri.parse("https://www.google.com/"),
-                  builder: (context, followLink) => ElevatedButton(
-                        onPressed: followLink,
-                        child: const Text("Web Url defaultTarget"),
-                      ))*/ /*
-        child: ElevatedButton(
-          onPressed: () {
-            */ /*Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const WebScreen();
-            }));*/ /*
-          },
-          child: const Text("Mobile Web View"),
-        ),
-        */ /*child: Link(
-            target: LinkTarget.self,
-            uri: Uri.parse("https://www.google.com/"),
-            builder: (context, followLink) => ElevatedButton(
-                  onPressed: followLink,
-                  child: const Text("Mobile Web View:+:"),
-                )),*/ /*
-      )*/
-* */

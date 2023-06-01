@@ -6,15 +6,18 @@ import 'desktop/desktop_web_screen.dart';
 import 'mobile/mobile_web_screen.dart';
 
 class WebScreen extends StatelessWidget {
-  const WebScreen({super.key});
+  const WebScreen({super.key, required this.webUrl});
+
+  final String webUrl;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    print(webUrl);
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Web Demo Application",
         home: ResponsiveWebLayout(
-          mobileScreen: MobileWebScreen(),
+          mobileScreen: MobileWebScreen(webUrl: webUrl),
           tabletScreen: TabletWebScreen(),
           desktopScreen: DesktopWebScreen(),
         ));

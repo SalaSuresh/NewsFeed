@@ -48,7 +48,7 @@ class TabletHomeScaffold extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const WebScreen();
+              return const WebScreen(webUrl: "",);
             }));
           },
           child: const Text("Tablet Web View"),
