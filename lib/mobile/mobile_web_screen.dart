@@ -5,7 +5,7 @@ class MobileWebScreen extends StatelessWidget {
   final String webUrl;
 
   // const MobileWebScreen({super.key, String url});
-  const MobileWebScreen({super.key, required String this.webUrl});
+  const MobileWebScreen({super.key, required this.webUrl});
 
   // final String url;
 
@@ -29,7 +29,7 @@ class WebViewApp extends StatefulWidget {
 
 class _WebViewAppState extends State<WebViewApp> {
   late final WebViewController controller;
-  String testUrl = "TS";
+  // String testUrl = "TS";
 
   _WebViewAppState(this.url);
 

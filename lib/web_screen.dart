@@ -18,7 +18,7 @@ class WebScreen extends StatelessWidget {
         title: "Web Demo Application",
         home: ResponsiveWebLayout(
           mobileScreen: MobileWebScreen(webUrl: webUrl),
-          tabletScreen: TabletWebScreen(),
+          tabletScreen: TabletWebScreen(webUrl: webUrl),
           desktopScreen: DesktopWebScreen(),
         ));
   }

@@ -1,4 +1,4 @@
-var appName = "News Demo";
+var appName = "News Feed";
 var bookmarks = "Bookmarks";
 var settings = "Settings";
 
@@ -17,7 +17,3 @@ var keyTitle = "title";
 var keyUrl = "url";
 var keyUrlToImage = "urlToImage";
 var keyPublishedAt = "publishedAt";
-
-//TODO: Added test API and need to remove later
-const apiTest =
-    "https://reactnativetestapp-fd209-default-rtdb.firebaseio.com/test.json";

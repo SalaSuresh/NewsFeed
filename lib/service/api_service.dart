@@ -8,20 +8,6 @@ import '../model/news.dart';
 
 /// Reference https://www.youtube.com/watch?v=zFXK5EsrUF0
 class ApiService {
-  /*Future<String> getTestApiData() async {
-    final response = await http.get(Uri.parse(apiTest));
-    Map? data;
-    if (response.statusCode == 200) {
-      final responseBody = response.body;
-      data = json.decode(response.body);
-      print("RESPONSE: $responseBody");
-      print("RESPONSE: ${data!["testKey"]}");
-    } else {
-      print("API FAILED");
-    }
-    return data!["testKey"];
-  }*/
-
   Future<List<Set<NewsArticle>>> getNewsArticles(String country) async {
     List<Set<NewsArticle>> listNewsArticles = [];
     final apiResponse = await http.get(Uri.parse(
