@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/constants/constants.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../locator.dart';
 import '../model/news.dart';
@@ -234,27 +235,59 @@ class ListItem extends StatelessWidget {
                   ,
                 ),
               )),
-          Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return WebScreen(
-                            webUrl: newsArticle.first.url.toString());
-                      }));
-                    } /*() => {
-                      debugPrint("News Article Url: ${newsArticle.first.url}")
-                    }*/
-                    ,
-                    child: const Text("View"),
-                  ),
-                ),
-              )),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 10.0, left: 10.0, bottom: 10.0, top: 5.0),
+            child: Row(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(
+                        right: 10.0, left: 10.0, bottom: 0.0, top: 0.0),
+                    child: ElevatedButton.icon(
+                        onPressed: () {
+                          Share.share(
+                              'News Feed:\n ${newsArticle.first.url.toString()}');
+                        },
+                        icon: const Icon(
+                          Icons.share,
+                          size: 16.0,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        label: Text(share))),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        right: 0.0, left: 10.0, bottom: 0.0, top: 0.0),
+                    child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return WebScreen(
+                                webUrl: newsArticle.first.url.toString());
+                          }));
+                        },
+                        icon: const Icon(
+                          Icons.open_in_new,
+                          size: 16.0,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        label: Text(visit)))
+              ],
+            ), /*ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return WebScreen(
+                          webUrl: newsArticle.first.url.toString());
+                    }));
+                  } */ /*() => {
+                    debugPrint("News Article Url: ${newsArticle.first.url}")
+                  }*/ /*
+                  ,
+                  child: Text(visit),
+                ),*/
+          ),
         ],
       ),
       /*child: Stack(

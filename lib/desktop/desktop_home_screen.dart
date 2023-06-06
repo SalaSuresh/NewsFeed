@@ -1,4 +1,4 @@
-import 'dart:js' as js;
+// import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 
@@ -147,8 +147,8 @@ class ListItem extends StatelessWidget {
                     right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    js.context
-                        .callMethod('open', [newsArticle.first.url.toString()]);
+                    /*js.context
+                        .callMethod('open', [newsArticle.first.url.toString()]);*/
                   },
                   child: const Text("View"),
                 ),
