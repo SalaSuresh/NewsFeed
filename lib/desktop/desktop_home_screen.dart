@@ -1,6 +1,7 @@
 // import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/constants.dart';
 import '../locator.dart';
@@ -10,6 +11,7 @@ import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
 
 List<Set<NewsArticle>> listNewsArticles = [];
+// final Uri _url = Uri.parse('');
 
 class DesktopHomeScreen extends StatelessWidget {
   const DesktopHomeScreen({super.key});
@@ -136,8 +138,7 @@ class ListItem extends StatelessWidget {
                 child: FadeInImage(
                   image:
                       NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
-                  placeholder: const NetworkImage(
-                      "https://dummyimage.com/640x360/000/aaa"),
+                  placeholder: const NetworkImage(defaultImage),
                 ),
               )),
           Align(
@@ -147,8 +148,8 @@ class ListItem extends StatelessWidget {
                     right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    /*js.context
-                        .callMethod('open', [newsArticle.first.url.toString()]);*/
+                    Uri.parse(newsArticle.first.url.toString());
+                    _launchUrl(newsArticle.first.url.toString());
                   },
                   child: const Text("View"),
                 ),
@@ -160,9 +161,16 @@ class ListItem extends StatelessWidget {
 
   String getImageUrl(String? urlToImage) {
     if (urlToImage == null) {
-      return "https://dummyimage.com/640x360/000/aaa";
+      return defaultImage;
     } else {
       return urlToImage.toString();
+    }
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final Uri _url = Uri.parse(url);
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
     }
   }
 }

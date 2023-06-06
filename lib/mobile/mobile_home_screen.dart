@@ -226,8 +226,7 @@ class ListItem extends StatelessWidget {
                     image:
                         // NetworkImage(newsArticle.first.urlToImage.toString()),
                         NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
-                    placeholder: const NetworkImage(
-                        "https://dummyimage.com/640x360/000/aaa"),
+                    placeholder: const NetworkImage(defaultImage),
                   ) /*Image.network(
                       getImageUrl(newsArticle.first.urlToImage),
                       height: 150,
@@ -327,7 +326,7 @@ class ListItem extends StatelessWidget {
 
   String getImageUrl(String? urlToImage) {
     if (urlToImage == null) {
-      return "https://dummyimage.com/640x360/000/aaa";
+      return defaultImage;
     } else {
       return urlToImage.toString();
     }

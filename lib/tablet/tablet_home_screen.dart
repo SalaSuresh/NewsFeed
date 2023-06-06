@@ -136,8 +136,7 @@ class ListItem extends StatelessWidget {
                 child: FadeInImage(
                   image:
                       NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
-                  placeholder: const NetworkImage(
-                      "https://dummyimage.com/640x360/000/aaa"),
+                  placeholder: const NetworkImage(defaultImage),
                 ),
               )),
           Align(
@@ -149,9 +148,9 @@ class ListItem extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                          return WebScreen(
-                              webUrl: newsArticle.first.url.toString());
-                        }));
+                      return WebScreen(
+                          webUrl: newsArticle.first.url.toString());
+                    }));
                   },
                   child: const Text("View"),
                 ),
@@ -163,7 +162,7 @@ class ListItem extends StatelessWidget {
 
   String getImageUrl(String? urlToImage) {
     if (urlToImage == null) {
-      return "https://dummyimage.com/640x360/000/aaa";
+      return defaultImage;
     } else {
       return urlToImage.toString();
     }
