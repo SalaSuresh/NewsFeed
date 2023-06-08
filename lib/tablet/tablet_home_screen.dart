@@ -136,7 +136,7 @@ class ListItem extends StatelessWidget {
                 child: FadeInImage(
                   image:
                       NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
-                  placeholder: const NetworkImage(defaultImage),
+                  placeholder: const NetworkImage(urlDefaultImage),
                 ),
               )),
           Align(
@@ -162,7 +162,7 @@ class ListItem extends StatelessWidget {
 
   String getImageUrl(String? urlToImage) {
     if (urlToImage == null) {
-      return defaultImage;
+      return urlDefaultImage;
     } else {
       return urlToImage.toString();
     }

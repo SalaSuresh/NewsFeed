@@ -192,29 +192,26 @@ class ListItem extends StatelessWidget {
         children: <Widget>[
           Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
-                  child: Text(newsArticle.first.title.toString(),
-                      textDirection: TextDirection.ltr,
-                      style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    right: 15.0, left: 15.0, bottom: 5.0, top: 10.0),
+                child: Text(newsArticle.first.title.toString(),
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
               )),
           Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-                  child: Text(newsArticle.first.author.toString(),
-                      textDirection: TextDirection.ltr,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      )),
-                ),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15.0, left: 15.0),
+                child: Text(newsArticle.first.author.toString(),
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12
+                    )),
               )),
           Align(
               alignment: Alignment.center,
@@ -226,7 +223,7 @@ class ListItem extends StatelessWidget {
                     image:
                         // NetworkImage(newsArticle.first.urlToImage.toString()),
                         NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
-                    placeholder: const NetworkImage(defaultImage),
+                    placeholder: const NetworkImage(urlDefaultImage),
                   ) /*Image.network(
                       getImageUrl(newsArticle.first.urlToImage),
                       height: 150,
@@ -254,6 +251,20 @@ class ListItem extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red),
                         label: Text(share))),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        right: 10.0, left: 10.0, bottom: 0.0, top: 0.0),
+                    child: ElevatedButton.icon(
+                        onPressed: () {
+                          //TODO: Save the Article
+                        },
+                        icon: const Icon(
+                          Icons.save,
+                          size: 16.0,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        label: Text("Save"))),
                 Padding(
                     padding: const EdgeInsets.only(
                         right: 0.0, left: 10.0, bottom: 0.0, top: 0.0),
@@ -326,7 +337,7 @@ class ListItem extends StatelessWidget {
 
   String getImageUrl(String? urlToImage) {
     if (urlToImage == null) {
-      return defaultImage;
+      return urlDefaultImage;
     } else {
       return urlToImage.toString();
     }
