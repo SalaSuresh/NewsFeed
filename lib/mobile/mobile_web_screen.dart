@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../constants/constants.dart';
+import '../utils/app_ui/ui_utils.dart';
+
 class MobileWebScreen extends StatelessWidget {
   final String webUrl;
 
@@ -14,7 +17,30 @@ class MobileWebScreen extends StatelessWidget {
     print("URL $webUrl");
     // return const MobileWebScaffold(webUrl);
     // String testUrl = "https://www.google.com/";
-    return WebViewApp(webUrl);
+    return Scaffold(
+        backgroundColor: Colors.grey[10],
+        appBar: AppBar(
+          backgroundColor: Colors.grey[900],
+          title: getTitle(appName),
+          // actions: <Widget>[
+          //   refreshAction(context, 20.0, getNewsFeed),
+          //   bookmarksAction(context, 20.0),
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 20.0),
+          //     child: GestureDetector(
+          //       onTap: () {
+          //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //           return const SettingsScreen();
+          //         }));
+          //       },
+          //       child: const Icon(
+          //         Icons.settings,
+          //       ),
+          //     ),
+          //   )
+          // ],
+        ),
+        body: WebViewApp(webUrl)); //WebViewApp(webUrl);
   }
 }
 
@@ -29,6 +55,7 @@ class WebViewApp extends StatefulWidget {
 
 class _WebViewAppState extends State<WebViewApp> {
   late final WebViewController controller;
+
   // String testUrl = "TS";
 
   _WebViewAppState(this.url);
