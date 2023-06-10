@@ -31,11 +31,11 @@ class _DesktopHomeScaffoldState extends State<DesktopHomeScaffold> {
   @override
   void initState() {
     super.initState();
-    getNewsFeed("in");
+    getNewsFeed();
   }
 
-  getNewsFeed(String countryCode) async {
-    var newsData = await locator.get<ApiService>().getNewsArticles(countryCode);
+  getNewsFeed() async {
+    var newsData = await locator.get<ApiService>().getNewsArticles();
     setState(() {
       listNewsArticles = newsData;
     });

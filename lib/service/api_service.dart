@@ -8,10 +8,22 @@ import '../model/news.dart';
 
 /// Reference https://www.youtube.com/watch?v=zFXK5EsrUF0
 class ApiService {
-  Future<List<Set<NewsArticle>>> getNewsArticles(String country) async {
+  Future<String> getUserCountry() async {
+    String countryCode = "";
+    final apiResponse = await http.get(Uri.parse(apiUserCountryCode));
+    Map? responseData;
+    if (apiResponse.statusCode == 200) {
+      responseData = json.decode(apiResponse.body);
+      countryCode = responseData!["countryCode"];
+    }
+    return countryCode;
+  }
+
+  Future<List<Set<NewsArticle>>> getNewsArticles() async {
+    String country = await getUserCountry();
     List<Set<NewsArticle>> listNewsArticles = [];
-    final apiResponse = await http.get(Uri.parse(
-        "https://newsapi.org/v2/top-headlines?country=${country}&apiKey=$apiKey"));
+    final apiResponse =
+        await http.get(Uri.parse(apiHeadlines.replaceAll("%s", country)));
     Map? responseData;
     if (apiResponse.statusCode == 200) {
       responseData = json.decode(apiResponse.body);
@@ -32,8 +44,6 @@ class ApiService {
     }
     return listNewsArticles;
   }
-
-// testFun() {}
 
 /*Future<List<String>> getTestdata() async {
     await Future.delayed(const Duration(seconds: 2));

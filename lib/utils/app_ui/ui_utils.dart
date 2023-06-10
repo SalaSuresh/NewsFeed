@@ -36,7 +36,7 @@ bookmarksAction(BuildContext context, double padding) {
 }
 
 refreshAction(
-    BuildContext context, double padding, Function(String) refreshNewsFeed) {
+    BuildContext context, double padding, Function() refreshNewsFeed) {
   try {
     //TODO: Commented the below condition for testing, need to enable later
     // if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
@@ -44,7 +44,7 @@ refreshAction(
       padding: EdgeInsets.only(right: padding),
       child: GestureDetector(
         onTap: () {
-          refreshNewsFeed("us");
+          refreshNewsFeed();
           // getNewsFeed();
         },
         child: const Icon(
