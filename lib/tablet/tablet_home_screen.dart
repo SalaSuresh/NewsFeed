@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
 import '../locator.dart';
+import '../mobile/mobile_bookmark_screen.dart';
 import '../model/news.dart';
 import '../service/api_service.dart';
 import '../utils/app_ui/ui_utils.dart';
 import '../web_screen.dart';
 
 List<Set<NewsArticle>> listNewsArticles = [];
-
+late SharedPreferences sharedPreference;
 class TabletHomeScreen extends StatelessWidget {
   const TabletHomeScreen({super.key});
 
@@ -29,8 +31,13 @@ class TabletHomeScaffold extends StatefulWidget {
 class _TabletHomeScaffoldState extends State<TabletHomeScaffold> {
   @override
   void initState() {
+    loadSharedPreferences();
     super.initState();
     getNewsFeed();
+  }
+
+  loadSharedPreferences() async {
+    sharedPreference = await SharedPreferences.getInstance();
   }
 
   getNewsFeed() async {
@@ -176,8 +183,10 @@ class ListItem extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               right: 5.0, left: 5.0, bottom: 0.0, top: 0.0),
                           child: IconButton(
-                              onPressed: () {
-                                //TODO: Save the Article
+                              onPressed: () async {
+                                await sharedPreference.setString(
+                                    newsArticle.first.url.toString(),
+                                    newsArticle.first.title.toString());
                               },
                               icon: const Icon(
                                 Icons.save,
