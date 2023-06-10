@@ -7,6 +7,7 @@ import '../locator.dart';
 import '../model/news.dart';
 import '../service/api_service.dart';
 import '../utils/app_ui/ui_utils.dart';
+import '../web_screen.dart';
 
 List<Set<NewsArticle>> listNewsArticles = [];
 
@@ -133,7 +134,7 @@ class ListItem extends StatelessWidget {
                     right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
                 child: FadeInImage(
                   image:
-                  NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
+                      NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
                   placeholder: const NetworkImage(urlDefaultImage),
                 ),
               )),
@@ -143,11 +144,18 @@ class ListItem extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black, // Background color
+                  ),
                   onPressed: () {
                     if (kIsWeb) {
                       _launchUrl(newsArticle.first.url.toString());
                     } else {
-                      //TODO: Launch Web screen
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return WebScreen(
+                            webUrl: newsArticle.first.url.toString());
+                      }));
                     }
                   },
                   child: Text(visit),
