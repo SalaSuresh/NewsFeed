@@ -13,7 +13,7 @@ getTitle(String title) {
 
 bookmarksAction(BuildContext context, double padding) {
   try {
-    if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
+    // if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
       return Padding(
         padding: EdgeInsets.only(right: padding),
         child: GestureDetector(
@@ -27,9 +27,9 @@ bookmarksAction(BuildContext context, double padding) {
           ),
         ),
       );
-    } else {
-      return Padding(padding: EdgeInsets.only(right: padding));
-    }
+    // } else {
+    //   return Padding(padding: EdgeInsets.only(right: padding));
+    // }
   } catch (exception) {
     return Padding(padding: EdgeInsets.only(right: padding));
   }

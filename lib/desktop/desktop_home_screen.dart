@@ -6,7 +6,6 @@ import '../constants/constants.dart';
 import '../locator.dart';
 import '../model/news.dart';
 import '../service/api_service.dart';
-import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
 
 List<Set<NewsArticle>> listNewsArticles = [];
@@ -48,7 +47,7 @@ class _DesktopHomeScaffoldState extends State<DesktopHomeScaffold> {
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
-        actions: <Widget>[
+        /*actions: <Widget>[
           refreshAction(context, 60.0, getNewsFeed),
           bookmarksAction(context, 60.0),
           Padding(
@@ -64,9 +63,10 @@ class _DesktopHomeScaffoldState extends State<DesktopHomeScaffold> {
               ),
             ),
           )
-        ],
+        ],*/
       ),
-      body: const NewsFeed(),
+      body: const Padding(
+          padding: EdgeInsets.only(right: 40.0, left: 40.0), child: NewsFeed()),
     );
   }
 }
@@ -81,13 +81,11 @@ class NewsFeed extends StatefulWidget {
 class NewsFeedState extends State<NewsFeed> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: listNewsArticles.length,
-      itemBuilder: (context, index) {
-        return ListItem(listNewsArticles[index]);
-      },
-    );
+    return GridView.count(
+        crossAxisCount: 3,
+        children: List.generate(listNewsArticles.length, (index) {
+          return ListItem(listNewsArticles[index]);
+        }));
   }
 }
 
@@ -101,20 +99,20 @@ class ListItem extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(16.0),
       ),
-      elevation: 10,
+      elevation: 5,
       child: Column(
         children: <Widget>[
           Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(
-                    right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
+                    right: 10.0, left: 10.0, bottom: 5.0, top: 15.0),
                 child: Text(newsArticle.first.title.toString(),
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(
-                        color: Colors.grey,
+                        color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),
               )),
@@ -135,7 +133,7 @@ class ListItem extends StatelessWidget {
                     right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
                 child: FadeInImage(
                   image:
-                      NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
+                  NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
                   placeholder: const NetworkImage(urlDefaultImage),
                 ),
               )),
@@ -152,7 +150,7 @@ class ListItem extends StatelessWidget {
                       //TODO: Launch Web screen
                     }
                   },
-                  child: const Text("View"),
+                  child: Text(visit),
                 ),
               )),
         ],

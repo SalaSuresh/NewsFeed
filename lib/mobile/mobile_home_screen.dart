@@ -45,15 +45,6 @@ class _MobileScaffoldState extends State<MobileScaffold> {
     setState(() {
       listNewsArticles = newsData;
     });
-    debugPrint("NEWS ARTICLES: $listNewsArticles");
-    //TODO: Need to remove --- START
-    listNewsArticles.forEach((e) {
-      e.forEach((a) {
-        print("NEWS DATA-------------------- ${a.title}");
-        print("NEWS DATA-------------------- ${a.author}");
-      });
-    });
-    //TODO: Need to remove --- END
   }
 
   @override

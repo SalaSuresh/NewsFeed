@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../constants/constants.dart';
 import '../locator.dart';
 import '../model/news.dart';
 import '../service/api_service.dart';
-import '../settings_screen.dart';
 import '../utils/app_ui/ui_utils.dart';
 import '../web_screen.dart';
 
@@ -48,10 +48,11 @@ class _TabletHomeScaffoldState extends State<TabletHomeScaffold> {
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
         actions: <Widget>[
-          //TODO: Need to enable later
-          refreshAction(context, 40.0, getNewsFeed),
+          /* Refresh feature removed */
+          // refreshAction(context, 40.0, getNewsFeed),
           bookmarksAction(context, 40.0),
-          Padding(
+          /* Settings feature removed */
+          /*Padding(
             padding: const EdgeInsets.only(right: 40.0),
             child: GestureDetector(
               onTap: () {
@@ -63,7 +64,7 @@ class _TabletHomeScaffoldState extends State<TabletHomeScaffold> {
                 Icons.settings,
               ),
             ),
-          )
+          )*/
         ],
       ),
       body: const NewsFeed(),
@@ -81,13 +82,11 @@ class NewsFeed extends StatefulWidget {
 class NewsFeedState extends State<NewsFeed> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: listNewsArticles.length,
-      itemBuilder: (context, index) {
-        return ListItem(listNewsArticles[index]);
-      },
-    );
+    return GridView.count(
+        crossAxisCount: 2,
+        children: List.generate(listNewsArticles.length, (index) {
+          return ListItem(listNewsArticles[index]);
+        }));
   }
 }
 
@@ -98,66 +97,98 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 10,
-      child: Column(
-        children: <Widget>[
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
-                child: Text(newsArticle.first.title.toString(),
-                    textDirection: TextDirection.ltr,
-                    style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-              )),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-                child: Text(newsArticle.first.author.toString(),
-                    textDirection: TextDirection.ltr,
-                    style: const TextStyle(
-                      color: Colors.grey,
+    return Padding(
+        padding: const EdgeInsets.only(
+            right: 10.0, left: 10.0, bottom: 0.0, top: 5.0),
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          elevation: 10,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return WebScreen(webUrl: newsArticle.first.url.toString());
+              }));
+            },
+            child: Column(
+              children: <Widget>[
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 15.0, left: 15.0, bottom: 5.0, top: 5.0),
+                      child: Expanded(
+                        child: Text(newsArticle.first.title.toString(),
+                            textDirection: TextDirection.ltr,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold)),
+                      ),
                     )),
-              )),
-          Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
-                child: FadeInImage(
-                  image:
-                      NetworkImage(getImageUrl(newsArticle.first.urlToImage)),
-                  placeholder: const NetworkImage(urlDefaultImage),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15.0, left: 15.0),
+                      child: Text(
+                          (newsArticle.first.author.toString().isEmpty)
+                              ? getTitle(appName)
+                              : newsArticle.first.author.toString(),
+                          textDirection: TextDirection.ltr,
+                          style: const TextStyle(
+                              color: Colors.grey, fontSize: 10)),
+                    )),
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 10.0, left: 10.0, bottom: 0.0, top: 5.0),
+                      child: FadeInImage(
+                        image: NetworkImage(
+                            getImageUrl(newsArticle.first.urlToImage)),
+                        placeholder: const NetworkImage(urlDefaultImage),
+                      ),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      right: 10.0, left: 10.0, bottom: 0.0, top: 0.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              right: 5.0, left: 5.0, bottom: 0.0, top: 0.0),
+                          child: IconButton(
+                            onPressed: () {
+                              Share.share(
+                                  'News Feed:\n ${newsArticle.first.url.toString()}');
+                            },
+                            icon: const Icon(
+                              Icons.share,
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              right: 5.0, left: 5.0, bottom: 0.0, top: 0.0),
+                          child: IconButton(
+                              onPressed: () {
+                                //TODO: Save the Article
+                              },
+                              icon: const Icon(
+                                Icons.save,
+                              )))
+                    ],
+                  ),
                 ),
-              )),
-          Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    right: 10.0, left: 10.0, bottom: 5.0, top: 5.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return WebScreen(
-                          webUrl: newsArticle.first.url.toString());
-                    }));
-                  },
-                  child: const Text("View"),
-                ),
-              )),
-        ],
-      ),
-    );
+              ],
+            ),
+          ),
+        ));
   }
 
   String getImageUrl(String? urlToImage) {
