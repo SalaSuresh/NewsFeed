@@ -22,7 +22,7 @@ class TabletBookmarkScaffold extends StatelessWidget {
       backgroundColor: Colors.grey[10],
       appBar: AppBar(
           backgroundColor: Colors.grey[900],
-          title: getTitle(bookmarks),
+          title: getTitle(bookmarksTitle),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 40.0),

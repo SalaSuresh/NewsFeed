@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/constants/constants.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../locator.dart';
 import '../model/news.dart';
@@ -10,6 +11,7 @@ import '../web_screen.dart';
 
 // String message = "Application Message";
 List<Set<NewsArticle>> listNewsArticles = [];
+late SharedPreferences sharedPreference;
 
 class MobileHomeScreen extends StatelessWidget {
   const MobileHomeScreen({super.key});
@@ -31,8 +33,13 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   @override
   void initState() {
     // debugPrint("initState called");
+    loadSharedPreferences();
     super.initState();
     getNewsFeed();
+  }
+
+  loadSharedPreferences() async {
+    sharedPreference = await SharedPreferences.getInstance();
   }
 
   getNewsFeed() async {
@@ -258,12 +265,13 @@ class ListItem extends StatelessWidget {
                             backgroundColor: Colors.red),
                         label: Text("Save"))*/
                               IconButton(
-                                  onPressed: () {
-                                    //TODO: Save the Article
+                                  onPressed: () async {
+                                    await sharedPreference.setString(
+                                        newsArticle.first.url.toString(),
+                                        newsArticle.first.title.toString());
                                   },
                                   icon: const Icon(
                                     Icons.save,
-                                    // size: 16.0,
                                   )))
                     ],
                   ), /*ElevatedButton(

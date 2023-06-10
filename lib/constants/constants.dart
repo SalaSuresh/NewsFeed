@@ -1,5 +1,5 @@
 var appName = "News Feed";
-var bookmarks = "Bookmarks";
+var bookmarksTitle = "Bookmarks";
 var settings = "Settings";
 var visit = "Visit";
 var share = "Share";
