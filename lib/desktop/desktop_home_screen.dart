@@ -48,10 +48,10 @@ class _DesktopHomeScaffoldState extends State<DesktopHomeScaffold> {
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
-        /*actions: <Widget>[
+        actions: <Widget>[
           refreshAction(context, 60.0, getNewsFeed),
-          bookmarksAction(context, 60.0),
-          Padding(
+          // bookmarksAction(context, 60.0),
+          /*Padding(
             padding: const EdgeInsets.only(right: 60.0),
             child: GestureDetector(
               onTap: () {
@@ -63,17 +63,17 @@ class _DesktopHomeScaffoldState extends State<DesktopHomeScaffold> {
                 Icons.settings,
               ),
             ),
-          )
-        ],*/
+          )*/
+        ],
       ),
-      body: const Padding(
+      body: Padding(
           padding: EdgeInsets.only(right: 40.0, left: 40.0), child: NewsFeed()),
     );
   }
 }
 
 class NewsFeed extends StatefulWidget {
-  const NewsFeed({super.key});
+  NewsFeed({super.key});
 
   @override
   NewsFeedState createState() => NewsFeedState();

@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
 import '../locator.dart';
-import '../mobile/mobile_bookmark_screen.dart';
 import '../model/news.dart';
 import '../service/api_service.dart';
 import '../utils/app_ui/ui_utils.dart';
@@ -56,7 +55,7 @@ class _TabletHomeScaffoldState extends State<TabletHomeScaffold> {
         title: getTitle(appName),
         actions: <Widget>[
           /* Refresh feature removed */
-          // refreshAction(context, 40.0, getNewsFeed),
+          refreshAction(context, 40.0, getNewsFeed),
           bookmarksAction(context, 40.0),
           /* Settings feature removed */
           /*Padding(
@@ -74,13 +73,13 @@ class _TabletHomeScaffoldState extends State<TabletHomeScaffold> {
           )*/
         ],
       ),
-      body: const NewsFeed(),
+      body: NewsFeed(),
     );
   }
 }
 
 class NewsFeed extends StatefulWidget {
-  const NewsFeed({super.key});
+  NewsFeed({super.key});
 
   @override
   NewsFeedState createState() => NewsFeedState();

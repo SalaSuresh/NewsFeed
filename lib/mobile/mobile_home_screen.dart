@@ -9,7 +9,6 @@ import '../service/api_service.dart';
 import '../utils/app_ui/ui_utils.dart';
 import '../web_screen.dart';
 
-// String message = "Application Message";
 List<Set<NewsArticle>> listNewsArticles = [];
 late SharedPreferences sharedPreference;
 
@@ -32,7 +31,6 @@ class MobileScaffold extends StatefulWidget {
 class _MobileScaffoldState extends State<MobileScaffold> {
   @override
   void initState() {
-    // debugPrint("initState called");
     loadSharedPreferences();
     super.initState();
     getNewsFeed();
@@ -62,7 +60,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
           backgroundColor: Colors.grey[900],
           title: getTitle(appName),
           actions: <Widget>[
-            // refreshAction(context, 20.0, getNewsFeed),
+            refreshAction(context, 20.0, getNewsFeed),
             bookmarksAction(context, 20.0),
             // Padding(
             //   padding: const EdgeInsets.only(right: 20.0),
