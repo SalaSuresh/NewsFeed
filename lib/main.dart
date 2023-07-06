@@ -8,6 +8,7 @@ import 'mobile/mobile_home_screen.dart';
 
 /*
 * Refer the video for Splash https://www.youtube.com/watch?v=4Aawfl6yOg4
+* Refer the video for windows application https://www.youtube.com/watch?v=U_HMuTXvZZY
 * */
 void main() {
   setup();
