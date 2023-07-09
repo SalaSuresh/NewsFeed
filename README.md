@@ -1,6 +1,6 @@
-# news_feed
+# News Feed
 
-News Feed Flutter Application
+News Feed is an Flutter application, this application will show all the top headline news from the country in the home screen using News APIs. This application is developed for Android, iOS, Windows desktop, Mac and Web.
 
 ## Getting Started
 
@@ -14,3 +14,15 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Required Environment Setup
+* Android Studio Flamingo | 2022.2.1 Java 11 or above
+* Flutter SDK setup.
+* Check the required setup with `flutter doctor` command
+
+### APIs Source
+* [newsapi](https://newsapi.org/)
+* [Ip Api](http://ip-api.com/json)
+
+### Screenshots
+TBD
