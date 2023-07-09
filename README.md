@@ -25,4 +25,4 @@ samples, guidance on mobile development, and a full API reference.
 * [Ip Api](http://ip-api.com/json)
 
 ### Screenshots
-TBD
+![News Feed](https://github.com/SalaSuresh/NewsFeed/blob/main/screenshots/NewsFeed.png)
