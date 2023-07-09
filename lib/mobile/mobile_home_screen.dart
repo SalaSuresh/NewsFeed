@@ -60,7 +60,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
           backgroundColor: Colors.grey[900],
           title: getTitle(appName),
           actions: <Widget>[
-            refreshAction(context, 20.0, getNewsFeed),
+            // refreshAction(context, 20.0, getNewsFeed),
             bookmarksAction(context, 20.0),
             // Padding(
             //   padding: const EdgeInsets.only(right: 20.0),

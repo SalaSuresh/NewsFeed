@@ -49,7 +49,7 @@ class _DesktopHomeScaffoldState extends State<DesktopHomeScaffold> {
         backgroundColor: Colors.grey[900],
         title: getTitle(appName),
         actions: <Widget>[
-          refreshAction(context, 60.0, getNewsFeed),
+          // refreshAction(context, 60.0, getNewsFeed),
           // bookmarksAction(context, 60.0),
           /*Padding(
             padding: const EdgeInsets.only(right: 60.0),

@@ -55,7 +55,7 @@ class _TabletHomeScaffoldState extends State<TabletHomeScaffold> {
         title: getTitle(appName),
         actions: <Widget>[
           /* Refresh feature removed */
-          refreshAction(context, 40.0, getNewsFeed),
+          // refreshAction(context, 40.0, getNewsFeed),
           bookmarksAction(context, 40.0),
           /* Settings feature removed */
           /*Padding(
