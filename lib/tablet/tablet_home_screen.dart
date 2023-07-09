@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/constants.dart';
 import '../locator.dart';
@@ -11,6 +15,7 @@ import '../web_screen.dart';
 
 List<Set<NewsArticle>> listNewsArticles = [];
 late SharedPreferences sharedPreference;
+
 class TabletHomeScreen extends StatelessWidget {
   const TabletHomeScreen({super.key});
 
@@ -114,9 +119,13 @@ class ListItem extends StatelessWidget {
           elevation: 10,
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return WebScreen(webUrl: newsArticle.first.url.toString());
-              }));
+              if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
+                _launchUrl(newsArticle.first.url.toString());
+              } else {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WebScreen(webUrl: newsArticle.first.url.toString());
+                }));
+              }
             },
             child: Column(
               children: <Widget>[
@@ -178,18 +187,25 @@ class ListItem extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red),
                           )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              right: 5.0, left: 5.0, bottom: 0.0, top: 0.0),
-                          child: IconButton(
-                              onPressed: () async {
-                                await sharedPreference.setString(
-                                    newsArticle.first.url.toString(),
-                                    newsArticle.first.title.toString());
-                              },
-                              icon: const Icon(
-                                Icons.save,
-                              )))
+                      (kIsWeb || Platform.isWindows || Platform.isMacOS)
+                          ? (const Padding(
+                              padding: EdgeInsets.only(
+                                  right: 5.0,
+                                  left: 5.0,
+                                  bottom: 0.0,
+                                  top: 0.0)))
+                          : (Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 5.0, left: 5.0, bottom: 0.0, top: 0.0),
+                              child: IconButton(
+                                  onPressed: () async {
+                                    await sharedPreference.setString(
+                                        newsArticle.first.url.toString(),
+                                        newsArticle.first.title.toString());
+                                  },
+                                  icon: const Icon(
+                                    Icons.save,
+                                  ))))
                     ],
                   ),
                 ),
@@ -204,6 +220,13 @@ class ListItem extends StatelessWidget {
       return urlDefaultImage;
     } else {
       return urlToImage.toString();
+    }
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final Uri articleUrl = Uri.parse(url);
+    if (!await launchUrl(articleUrl)) {
+      throw Exception('Could not launch $articleUrl');
     }
   }
 }

@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:news_feed/constants/constants.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../locator.dart';
 import '../model/news.dart';
@@ -187,9 +191,13 @@ class ListItem extends StatelessWidget {
           elevation: 10,
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return WebScreen(webUrl: newsArticle.first.url.toString());
-              }));
+              if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
+                _launchUrl(newsArticle.first.url.toString());
+              } else {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WebScreen(webUrl: newsArticle.first.url.toString());
+                }));
+              }
             },
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,6 +338,13 @@ class ListItem extends StatelessWidget {
       return urlDefaultImage;
     } else {
       return urlToImage.toString();
+    }
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final Uri articleUrl = Uri.parse(url);
+    if (!await launchUrl(articleUrl)) {
+      throw Exception('Could not launch $articleUrl');
     }
   }
 }

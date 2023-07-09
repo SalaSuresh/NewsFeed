@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -148,7 +150,7 @@ class ListItem extends StatelessWidget {
                     backgroundColor: Colors.black, // Background color
                   ),
                   onPressed: () {
-                    if (kIsWeb) {
+                    if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
                       _launchUrl(newsArticle.first.url.toString());
                     } else {
                       Navigator.push(context,
